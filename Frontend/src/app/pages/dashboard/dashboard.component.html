@@ -1,0 +1,401 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Inactive Accounts</h5>
+                  <span class="h2 font-weight-bold mb-0">{{inactive}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Active Accounts</h5>
+                  <span class="h2 font-weight-bold mb-0">{{active}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                    <i class="fas fa-chart-pie"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Paid Users</h5>
+                  <span class="h2 font-weight-bold mb-0">{{paid}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                    <i class="fas fa-users"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Total Users</h5>
+                  <span class="h2 font-weight-bold mb-0">{{total}}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                    <i class="fas fa-percent"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-8 mb-5 mb-xl-0">
+      <div class="card bg-gradient-default shadow">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="text-uppercase text-light ls-1 mb-1">User Details</h2>
+              <h6 class="text-uppercase text-light ls-1 mb-1">Enter registration id to search an account</h6>
+              <nav class="navbar navbar-radient-default shadow bg-radient-default shadow">
+                <div class="container-fluid">
+                  <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="activeData.regid" [ngModelOptions]="{standalone: true}">
+                    <button class="btn btn-outline-success" type="submit" (click)="searchUser()">Search</button>
+                  </form>
+                </div>
+              </nav>    
+            </div> 
+          </div>
+        </div>
+        <div class="card ">
+          <div class="card-body" *ngFor='let user of Data'>
+            <p class="card-title">{{user.name}}</p>
+            <h5 class="card-text">Registration Id:{{user.regid}}</h5>
+            <h5 class="card-text ">Name:{{user.firstname}} {{user.lastname}}</h5>
+            <h5 class="card-text ">Email:{{user.email}}</h5>
+            <h5 class="card-text">Phone:{{user.phone}}</h5>
+            <button class="btn btn-danger" (click)="triggerModal(modalData)">Edit</button>
+            <button class="btn btn-danger" (click)="triggerModal(deleteModal)">Delete</button>
+            <button class="btn btn-danger" (click)="triggerModal(deactivateModel)">Deactivate</button>
+      
+    <!--Deactivate Model-->           
+ <ng-template #deactivateModel let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Deactivate User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Are you sure you want to Deactivate <span class="text-primary">{{user.firstname}} {{user.lastname}}</span> profile?</strong></p>
+    
+    <p>All data related to  profile will be removed temporarily.</p>
+    <div class="row">       
+      <div class="col">
+        <div class="row">
+        <label for="inputZip" class="form-label" >Registration Id: <h2>{{user.regid}}</h2></label>
+        <input type="text" class="form-control"  [(ngModel)]="deleteData.regid" placeholder="Enter the register id.">
+      </div>
+    </div>
+  </div>
+  <div class="row">       
+    <div class="col">
+      <div class="row">
+      <label for="inputZip" class="form-label" >Re-Enter Registration Id</label>
+      <input type="text" class="form-control"  [(ngModel)]="deleteData.regidtwo" placeholder="Enter the register id.">
+    </div>
+  </div>
+</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deactivateUser()">Deactivate</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+  </div>
+</div>
+</ng-template>         
+<!--/Deactivate Model-->          
+   
+ <!--Delete Model-->           
+ <ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>Are you sure you want to delete <span class="text-primary">{{user.firstname}} {{user.lastname}}</span> profile?</strong></p>
+    
+    <p>All data related to  profile will be removed permanently.</p>
+    <div class="row">       
+      <div class="col">
+        <div class="row">
+        <label for="inputZip" class="form-label" >Registration Id: <h2>{{user.regid}}</h2></label>
+        <input type="text" class="form-control"  [(ngModel)]="deleteData.regid" placeholder="Enter the register id.">
+      </div>
+    </div>
+  </div>
+  <div class="row">       
+    <div class="col">
+      <div class="row">
+      <label for="inputZip" class="form-label" >Re-Enter Registration Id</label>
+      <input type="text" class="form-control"  [(ngModel)]="deleteData.regidtwo" placeholder="Enter the register id.">
+    </div>
+  </div>
+</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteUser()">Delete</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+  </div>
+</div>
+</ng-template>         
+<!--/Delete Model-->    
+
+<!-- Edit Modal -->
+<ng-template #modalData let-modal >
+  <div class="modal-header" >
+    <h3 class="modal-title" id="modal-basic-title">Details of User</h3>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="col">
+      <h5 style="color: red;" class="modal-title"> 1.  RE-ENTER THE DETAILS ALONG WITH DATA TO BE UPDATED.</h5><br>
+     
+      <h5 style="color: red;" class="modal-title"> 2.  CURRENT DATA IS BEEN SHOWN ALONG WITH COLUMN NAME.</h5><br>
+      
+      <h5 style="color: red;" class="modal-title"> 3.  ALL VALUES MUST BE PROVIDED.</h5><br><br>
+  </div> 
+  <!-- <div class="col-6"> 
+    <input type="file"  id="fileUpload"  [(ngModel)]="update.image"/>Browse<br><br>
+  </div> -->
+      <div class="modal-body">
+        <div class="row">      
+          <div class="col">
+            <div class="row">
+          </div>
+        </div>
+      </div>
+        <div class="row">      
+            <div class="col">
+              <div class="row">
+              <label for="inputZip" class="form-label" >Registration Id: <h2>{{user.regid}}</h2></label>
+              <input type="text" class="form-control"  [(ngModel)]="update.regid" placeholder="Enter the register id as given above.">
+            </div>
+          </div>
+        </div>
+         <div class="row">
+            <div class="col-6"> 
+              <label for="firstname" class="form-label" id="nameLabel">First Name:{{user.firstname}}</label>
+              <input type="text" class="form-control" aria-label="First name" [(ngModel)]="update.firstname" >
+            </div>
+            <div class="col-6"> 
+              <label for="lastname" class="form-label">Last Name:{{user.lastname}}</label>
+              <input type="text" class="form-control" aria-label="Last name" [(ngModel)]="update.lastname">
+            </div> 
+          </div>
+          <div class="row">
+            <div class="col-10">
+              <label for="inputEmail4" class="form-label"  >Email:{{user.email}}</label>
+              <input type="text" class="form-control" [(ngModel)]="update.email" >
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-6">
+              <label for="inputPhone" class="form-label"  >Phone Number:{{user.phone}}</label>
+              <input type="text"  class="form-control"  [(ngModel)]="update.phone" >
+            </div>
+          </div>  
+          <div class="row">
+            <div class="col-6">
+              <label for="inputAddress" class="form-label" >Address:{{user.address1}}</label>
+              <input type="text"  class="form-control" [(ngModel)]="update.address1" >
+            </div>
+            <div class="col-6">
+              <label for="inputAddress2" class="form-label" >Landmark:{{user.landmark}}</label>
+              <input type="text" class="form-control"  [(ngModel)]="update.landmark" >
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <label for="inputCity" class="form-label" id="citylabel">City:{{user.city}}</label>
+              <input type="text"  class="form-control" id="inputCity" [(ngModel)]="update.city">
+            </div>
+            <div class="col-4">
+              <label for="inputState" class="form-label" id="statelabel">District:{{user.district}}</label> 
+              <select id="inputState"  class="form-select" [(ngModel)]="update.district">
+                <option selected>Choose State</option>
+                <option>Kasargod</option>
+                <option>Kannur</option>
+                <option>Wayanad</option>
+                <option>Kozhikode</option>
+                <option>Malapuram</option>
+                <option>Palakkad</option>
+                <option>Thrissur</option>
+                <option>Ernakulam</option>
+                <option>Idukki</option>
+                <option>Kottayam</option>
+                <option>Alapuzha</option>
+                <option>Pathanamthitta</option>
+                <option>Kollam</option>
+                <option>Thiruvananthapuram</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">       
+              <div class="col-4">
+                <label for="inputZip" class="form-label" >Zip:{{user.zip}}</label>
+                <input type="text"  class="form-control"  [(ngModel)]="update.zip" >
+              </div>
+            </div>
+            <div class="row">       
+                <div class="col-4">
+                  <label for="inputqual" class="form-label" >Qualification:{{user.qualification}}</label>
+                  <input type="text"  class="form-control"  [(ngModel)]="update.qualification" >
+                </div>      
+                <div class="col-4">
+                  <label for="inputyop" class="form-label" >Passout Year:{{user.yearofpassout}}</label>
+                  <input type="text"  class="form-control"  [(ngModel)]="update.yearofpassout" >
+                </div>       
+                  <div class="col-4">
+                    <label for="inputskill" class="form-label" >Skill Set:{{user.skillset}}</label>
+                    <input type="text"  class="form-control"   [(ngModel)]="update.skillset" >
+                  </div>   
+              </div>
+              <div class="row">   
+                <div class="col-4">
+                  <label for="inputempstatus" class="form-label" >Employement Status:{{user.empstatus}}</label>
+                  <input type="text"  class="form-control"  [(ngModel)]="update.empstatus" >
+                </div>      
+                <div class="col-4">
+                  <label for="inputtechtraining" class="form-label" >Technical Training:{{user.techTraining}}</label>
+                  <input type="text"  class="form-control"   [(ngModel)]="update.techTraining" >
+                </div>
+            </div>
+            <div class="row">       
+                <div class="col-4">
+                  <label for="inputyear" class="form-label" >Year:{{user.year}} </label>
+                  <input type="text"  class="form-control" [(ngModel)]="update.year">
+                </div>       
+                <div class="col-4">
+                  <label for="inputcourse" class="form-label" >Course:{{user.course}}</label>
+                  <input type="text"  class="form-control"  [(ngModel)]="update.course" >
+                </div>
+                <div class="col-3">
+                  <label for="inputfees" class="form-label" >Amount Paid:{{user.amount}}</label>
+                  <input type="text"  class="form-control"  [(ngModel)]="update.amount" >
+                </div>
+            </div>
+          </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-danger" (click)= updateEnrollment()>Save</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+      </div>
+    </div>
+    <!--card div-->
+  </div>
+</div>
+    <div class="col-xl-4">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <h6 class="text-uppercase text-muted ls-1 mb-1">New User Accounts</h6>
+              <h2 class="mb-0">Inactive accounts</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body" *ngFor='let user of Users'>
+            <p class="card-title">Registration ID: {{user.regid}}</p>
+            <h5 class="card-text">Name: {{user.firstname}} {{user.lastname}}</h5>
+            <h5 class="card-text">Email: {{user.email}}</h5>
+            <h5 class="card-text">Phone: {{user.phone}}</h5>
+            <label for="inputcourse" class="form-label" >Re-Enter RegId</label>
+            <input type="text"  class="form-control"  [(ngModel)]="activeData.regid" placeholder="Enter registration id">
+            <br>
+            <button type="submit" class="btn btn-danger" (click)="activateUser()">Activate</button>
+            <button type="submit" class="btn btn-danger" (click)="triggerModal(notificationModal)">Send Notification</button>
+         
+          <!--Notification Model-->           
+          <ng-template #notificationModal let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Delete User</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p><strong>Are you sure you want to sent recipient bill to <span class="text-primary">{{user.firstname}} {{user.lastname}}</span> </strong></p>
+              <div class="row">       
+                <div class="col">
+                  <div class="row">
+                  <label for="inputZip" class="form-label" >Registration Id: <h2>{{user.regid}}</h2></label>
+                  <input type="text" class="form-control"  [(ngModel)]="mailData.regid" placeholder="Enter the registration id.">
+                </div>
+              </div>
+             </div>
+             <div class="row">       
+              <div class="col">
+                <div class="row">
+                <label for="inputZip" class="form-label" >Email Id: <h2>{{user.email}}</h2></label>
+                <input type="text" class="form-control"  [(ngModel)]="mailData.email" placeholder="Enter the email id.">
+              </div>
+            </div>
+           </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="sendNotification()">Send</button>
+                <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+              </div>
+          </div>
+          </ng-template>         
+          <!--/Notification Model-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-xl-8 mb-5 mb-xl-0">
+    <div class="card shadow">
+      <div class="card-header border-0">
+        <div class="row align-items-center">
+          <div class="col">
+            <h3 class="mb-0">Paid users report</h3>
+          </div>
+          <div class="col text-right">
+            <button type="button" class="btn btn-danger" (click)="generateReport()">Generate Report</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive"> 
